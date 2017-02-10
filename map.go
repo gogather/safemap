@@ -1,6 +1,8 @@
 package safemap
 
 import "sync"
+import "fmt"
+import "github.com/gogather/com"
 
 // SafeMap safe map struct
 type SafeMap struct {
@@ -37,4 +39,22 @@ func (sm *SafeMap) Get(key string) (interface{}, bool) {
 	sm.RLock()
 	v, ok := sm.m[key]
 	return v, ok
+}
+
+func (sm *SafeMap) String() string {
+	defer func() {
+		sm.RUnlock()
+	}()
+	sm.RLock()
+	return fmt.Sprintf("%v", sm.m)
+}
+
+// JSON convert map to json string
+func (sm *SafeMap) JSON() (json string) {
+	defer func() {
+		sm.RUnlock()
+	}()
+	sm.RLock()
+	json, _ = com.JsonEncode(sm.m)
+	return
 }

@@ -25,3 +25,13 @@ func Test_Map(t *testing.T) {
 	for true {
 	}
 }
+
+func Test_String(t *testing.T) {
+	safeMap := New()
+	count := 1000
+	for i := 0; i < count; i++ {
+		safeMap.Put(fmt.Sprintf("%d", i), i)
+	}
+
+	fmt.Println(safeMap.JSON())
+}
