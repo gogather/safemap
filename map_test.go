@@ -2,6 +2,7 @@ package safemap
 
 import "testing"
 import "fmt"
+import "encoding/json"
 
 func Test_Map(t *testing.T) {
 	safeMap := New()
@@ -33,5 +34,6 @@ func Test_String(t *testing.T) {
 		safeMap.Put(fmt.Sprintf("%d", i), i)
 	}
 
-	fmt.Println(safeMap.JSON())
+	response, _ := json.Marshal(safeMap.GetMap())
+	fmt.Println(string(response))
 }
