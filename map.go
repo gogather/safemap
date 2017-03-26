@@ -7,27 +7,27 @@ import "github.com/gogather/com"
 // SafeMap safe map struct
 type SafeMap struct {
 	sync.RWMutex
-	m map[string]interface{}
+	M map[string]interface{} `json:"_"`
 }
 
 // New new a SafeMap
 func New() *SafeMap {
 	return &SafeMap{
-		m: make(map[string]interface{}),
+		M: make(map[string]interface{}),
 	}
 }
 
 // Put put element into safemap
 func (sm *SafeMap) Put(key string, value interface{}) {
 	sm.Lock()
-	sm.m[key] = value
+	sm.M[key] = value
 	sm.Unlock()
 }
 
 // Remove remove element from safemap
 func (sm *SafeMap) Remove(key string) {
 	sm.Lock()
-	delete(sm.m, key)
+	delete(sm.M, key)
 	sm.Unlock()
 }
 
@@ -37,21 +37,21 @@ func (sm *SafeMap) Get(key string) (interface{}, bool) {
 		sm.RUnlock()
 	}()
 	sm.RLock()
-	v, ok := sm.m[key]
+	v, ok := sm.M[key]
 	return v, ok
 }
 
 func (sm *SafeMap) String() string {
-	return fmt.Sprintf("%v", sm.m)
+	return fmt.Sprintf("%v", sm.M)
 }
 
 // JSON convert map to json string
 func (sm *SafeMap) JSON() (json string) {
-	json, _ = com.JsonEncode(sm.m)
+	json, _ = com.JsonEncode(sm.M)
 	return
 }
 
 // GetMap get original map
 func (sm *SafeMap) GetMap() map[string]interface{} {
-	return sm.m
+	return sm.M
 }

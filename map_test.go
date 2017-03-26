@@ -34,6 +34,6 @@ func Test_String(t *testing.T) {
 		safeMap.Put(fmt.Sprintf("%d", i), i)
 	}
 
-	response, _ := json.Marshal(safeMap.GetMap())
+	response, _ := json.Marshal(safeMap)
 	fmt.Println(string(response))
 }
