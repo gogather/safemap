@@ -42,11 +42,19 @@ func (sm *SafeMap) Get(key string) (interface{}, bool) {
 }
 
 func (sm *SafeMap) String() string {
+	defer func() {
+		sm.RUnlock()
+	}()
+	sm.RLock()
 	return fmt.Sprintf("%v", sm.M)
 }
 
 // JSON convert map to json string
 func (sm *SafeMap) JSON() (json string) {
+	defer func() {
+		sm.RUnlock()
+	}()
+	sm.RLock()
 	json, _ = com.JsonEncode(sm.M)
 	return
 }
