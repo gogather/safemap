@@ -63,3 +63,8 @@ func (sm *SafeMap) JSON() (json string) {
 func (sm *SafeMap) GetMap() map[string]interface{} {
 	return sm.M
 }
+
+// Clear clear the map
+func (sm *SafeMap) Clear() {
+	sm.M = make(map[string]interface{})
+}
