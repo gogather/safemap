@@ -25,7 +25,16 @@ func New() *SafeMap {
 func (sm *SafeMap) Put(key string, value interface{}) {
 	sm.Lock()
 	sm.m[key] = value
-	sm.keys = append(sm.keys, key)
+	exist := false
+	for _, item := range sm.keys {
+		if item == key {
+			exist = true
+			break
+		}
+	}
+	if !exist {
+		sm.keys = append(sm.keys, key)
+	}
 	sm.Unlock()
 }
 
