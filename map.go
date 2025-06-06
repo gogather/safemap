@@ -83,6 +83,19 @@ func (sm *SafeMap) GetMap() map[string]interface{} {
 	return sm.m
 }
 
+// CloneAsMap clone as original map
+func (sm *SafeMap) CloneAsMap() map[string]interface{} {
+	defer func() {
+		sm.RUnlock()
+	}()
+	sm.RLock()
+	newMap := map[string]interface{}{}
+	for k, v := range sm.m {
+		newMap[k] = v
+	}
+	return newMap
+}
+
 // Clear clear the map
 func (sm *SafeMap) Clear() {
 	sm.m = make(map[string]interface{})
